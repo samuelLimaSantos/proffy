@@ -1,38 +1,52 @@
 import React from "react";
 import whatsAppIcon from "../../assets/images/icons/whatsapp.svg";
 import "./styles.css";
+import api from "../../services/api";
 
-const TeacherItem = () => {
+export interface Teacher {
+  id: number;
+  avatar: string;
+  bio: string;
+  cost: number;
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface TeacherItemProps {
+  teacher: Teacher;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  function createNewConnection() {
+    api.post("/connections", {
+      user_id: teacher.id,
+    });
+  }
+
   return (
     <article className="teacher-item">
       <header>
-        <img
-          src="https://avatars0.githubusercontent.com/u/63209462?s=460&u=df54d99538ae00bba4485dea1c8eda3bc33cfe0e&v=4"
-          alt="Samuel Santos"
-        />
+        <img src={teacher.avatar} alt="Samuel Santos" />
         <div>
-          <strong>Samuel Santos</strong>
-          <span>Matemática</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
-      <p>
-        Entusiasta das melhores fórmulas de matemática avançada.
-        <br />
-        <br />
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt, iure?
-        Totam perferendis nobis aspernatur corrupti, non dolore hic voluptas rem
-        sed? Reiciendis pariatur illum autem rerum sint voluptatibus!
-        Consectetur, tempora.
-      </p>
+      <p>{teacher.bio}</p>
       <footer>
         <p>
           Preço/hora
-          <strong>R$ 80,00</strong>
+          <strong>R$ {teacher.cost}</strong>
         </p>
-        <button type="button">
+        <a
+          target="_blank"
+          onClick={createNewConnection}
+          href={`https://wa.me/${teacher.whatsapp}`}
+        >
           <img src={whatsAppIcon} alt="Icone Whatsapp" />
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   );
