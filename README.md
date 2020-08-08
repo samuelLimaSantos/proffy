@@ -2,7 +2,7 @@
 
 Repositório responsável por armazenar o projeto desenvolvido durante a semana **Next Level Week#2** promovida pela _Rocketseat_.
 
-## O projeto :recycle:
+## O projeto :book:
 
 Pensando em agregar mais valor para todo o ecossistema educacional, o Proffy é uma plataforma que une alunos e professores visando como bem maior a educação. Na plataforma o professor pode cadastrar a sua modalidade de aulas, enquanto o aluno pode contratar os seus serviços.
 
