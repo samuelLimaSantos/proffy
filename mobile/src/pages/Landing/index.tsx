@@ -1,29 +1,38 @@
-import React from "react";
-import { View, Image, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { RectButton } from "react-native-gesture-handler";
-import landingImage from "../../assets/images/landing.png";
-import studyIcon from "../../assets/images/icons/study.png";
-import giveClassesIcon from "../../assets/images/icons/give-classes.png";
-import heartIcon from "../../assets/images/icons/heart.png";
-import styles from "./styles";
+import React, { useState, useEffect } from 'react';
+import { View, Image, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { RectButton } from 'react-native-gesture-handler';
+import api from '../../services/api';
+import landingImage from '../../assets/images/landing.png';
+import studyIcon from '../../assets/images/icons/study.png';
+import giveClassesIcon from '../../assets/images/icons/give-classes.png';
+import heartIcon from '../../assets/images/icons/heart.png';
+import styles from './styles';
 
 const Landing = () => {
   const { navigate } = useNavigation();
+  const [totalConnections, setTotalConnections] = useState(0);
+
+  useEffect(() => {
+    api.get('/connections').then((response) => {
+      const { total } = response.data;
+      setTotalConnections(total);
+    });
+  }, []);
 
   function handleNavigateToGiveClassesPage() {
-    navigate("GiveClasses");
+    navigate('GiveClasses');
   }
 
   function handleNavigateToStudyPages() {
-    navigate("Study");
+    navigate('Study');
   }
 
   return (
     <View style={styles.container}>
       <Image source={landingImage} style={styles.banner} />
       <Text style={styles.title}>
-        Seja bem-vindo, {"\n"}
+        Seja bem-vindo, {'\n'}
         <Text style={styles.titleBold}>O que deseja fazer?</Text>
       </Text>
 
@@ -46,7 +55,8 @@ const Landing = () => {
         </RectButton>
       </View>
       <Text style={styles.totalConnections}>
-        Total de 285 conexões realizadas <Image source={heartIcon} />
+        Total de {totalConnections} conexões realizadas{' '}
+        <Image source={heartIcon} />
       </Text>
     </View>
   );
